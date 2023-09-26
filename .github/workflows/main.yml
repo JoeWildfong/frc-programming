@@ -43,6 +43,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: built-html
+          path: book
       - name: Package
         run: tar -czf frc-programming.tar.gz book
       - name: Release
