@@ -43,9 +43,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: built-html
-          path: book
+          path: frc-programming
       - name: Package
-        run: tar -czf frc-programming.tar.gz book
+        run: tar -czf frc-programming.tar.gz frc-programming
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
