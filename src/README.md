@@ -47,4 +47,4 @@ When writing robot code, programmers should use whichever naming conventions are
 
 This guide is free and open-source. You can find the source on [GitHub] and open and issue or submit a pull request to suggest a change.
 
-[GitHub]: todo
+[GitHub]: https://github.com/JoeWildfong/frc-programming
