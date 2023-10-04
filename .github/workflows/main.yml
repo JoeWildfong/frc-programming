@@ -33,21 +33,19 @@ jobs:
           name: built-html
           path: book
 
-  release:
-    name: Release
+  publish:
+    name: Publish
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
+    if: github.ref == 'refs/heads/main'
     needs: [build, lint]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: built-html
-          path: frc-programming
-      - name: Package
-        run: tar -czf frc-programming.tar.gz frc-programming
-      - name: Release
-        uses: softprops/action-gh-release@v1
+          path: ./frc-programming
+      - name: Publish
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          files: |
-            frc-programming.tar.gz
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frc-programming
