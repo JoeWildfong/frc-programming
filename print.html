@@ -168,6 +168,7 @@ However, this guide has a few explicit goals that other resources tend not to fu
 <li><em>Be structured.</em> Some resources have great information, but don't structure it in a way such that a beginner can easily learn.</li>
 <li><em>Be language-independent.</em> Some resources focus specifically on Java or C++, rather than on the concepts that are shared across all WPILib languages.</li>
 <li><em>Give lots of diagrams and code examples.</em> Some resources give only large blocks of text or long videos, without any alternative forms of presenting the information.</li>
+<li><em>Explain why.</em> Some resources give great explanations on current conventions and best-practices, but don't explain their purpose or what problems they avoid.</li>
 </ul>
 <h2 id="a-word-on-coding-style"><a class="header" href="#a-word-on-coding-style">A Word on Coding Style</a></h2>
 <p>WPILib code often follows particular naming choices, such as prefixing class variable names with <code>m_</code> and beginning enum option names with <code>k</code>.
@@ -177,7 +178,85 @@ When writing robot code, programmers should use whichever naming conventions are
 <h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
 <p>This guide is free and open-source. You can find the source on <a href="https://github.com/JoeWildfong/frc-programming">GitHub</a> and open and issue or submit a pull request to suggest a change.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="overview"><a class="header" href="#overview">Overview</a></h1>
-<p>TODO: system diagram here? introduction to framework</p>
+<p>Here's a breakdown of the hardware commonly involved in FRC competitions:</p>
+<pre class="mermaid">flowchart TD
+    Computer[Computer]
+    subgraph Robot
+        RIO((&quot;RoboRIO Microcontroller&quot;))
+        Radio([Radio])
+        subgraph CAN[CAN Devices]
+            direction LR
+            Pneumatics[/Pneumatics Controller/]
+            Motors[/Motors/]
+            Pneumatics --- Motors
+        end
+        subgraph Sensors
+            Digital([&quot;
+                Encoders
+                Limit Switches
+                Other Digital Sensors
+            &quot;])
+            Analog([&quot;
+                Potentiometers
+                Other Analog Sensors
+            &quot;])
+            Fancy([&quot;
+                Color Sensors
+                Gyroscopes
+                Other Complex Sensors
+            &quot;])
+        end
+        subgraph Vision
+            Pi[Raspberry Pi]
+            Camera([Camera])
+        end
+
+        RIO &lt;--CAN loop--&gt; CAN
+        RIO &lt;--Network Tables--&gt; Vision
+        Pi &lt;--USB--&gt; Camera
+        Digital --Digital Pins--&gt; RIO
+        Analog --Analog Pins--&gt; RIO
+        Fancy --I2C or SPI--&gt; RIO
+        Radio &lt;--Ethernet--&gt; RIO
+    end
+    Computer &lt;--WiFi--&gt; Radio
+    Computer -.USB.-&gt; RIO
+    classDef input fill: orange
+    class Radio,Digital,Analog,Fancy,Camera input
+    classDef output fill: lightgreen
+    class Pneumatics,Motors output
+</pre>
+<p>On the software side, an oversimplified diagram might look like this:</p>
+<pre class="mermaid">flowchart TD
+    Timer[&quot;
+        External Timer
+        Triggers on a set period
+        (every 50ms by default)
+    &quot;]
+    subgraph Framework[WPILib Framework]
+        Entry[WPILib Logic]
+        subgraph Ours[Our Code]
+            Auto[Autonomous Logic]
+            Teleop[Teleoperated Logic]
+        end
+        Entry -.When in auto mode.-&gt; Auto
+        Entry -.When in teleop mode.-&gt; Teleop
+        subgraph Helpers[Other WPILib Classes]
+            direction LR
+            Motors
+            Pneumatics
+            Schedulers
+            Sensors
+            Motors ~~~ Pneumatics
+            Pneumatics ~~~ Sensors
+            Sensors ~~~ Schedulers
+        end
+        Auto --&gt; Helpers
+        Teleop --&gt; Helpers
+    end
+    Timer --&gt; Framework
+    Framework --&gt; Wait[Done, waiting for Timer]
+</pre>
 <h2 id="terms-and-definitions"><a class="header" href="#terms-and-definitions">Terms and definitions</a></h2>
 <p><strong>FRC</strong>: First Robotics Competition - the entire competition and community, including
 building the robots, programming, wiring, social media, business, driving, etc.

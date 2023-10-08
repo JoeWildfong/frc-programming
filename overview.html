@@ -142,7 +142,85 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="overview"><a class="header" href="#overview">Overview</a></h1>
-<p>TODO: system diagram here? introduction to framework</p>
+<p>Here's a breakdown of the hardware commonly involved in FRC competitions:</p>
+<pre class="mermaid">flowchart TD
+    Computer[Computer]
+    subgraph Robot
+        RIO((&quot;RoboRIO Microcontroller&quot;))
+        Radio([Radio])
+        subgraph CAN[CAN Devices]
+            direction LR
+            Pneumatics[/Pneumatics Controller/]
+            Motors[/Motors/]
+            Pneumatics --- Motors
+        end
+        subgraph Sensors
+            Digital([&quot;
+                Encoders
+                Limit Switches
+                Other Digital Sensors
+            &quot;])
+            Analog([&quot;
+                Potentiometers
+                Other Analog Sensors
+            &quot;])
+            Fancy([&quot;
+                Color Sensors
+                Gyroscopes
+                Other Complex Sensors
+            &quot;])
+        end
+        subgraph Vision
+            Pi[Raspberry Pi]
+            Camera([Camera])
+        end
+
+        RIO &lt;--CAN loop--&gt; CAN
+        RIO &lt;--Network Tables--&gt; Vision
+        Pi &lt;--USB--&gt; Camera
+        Digital --Digital Pins--&gt; RIO
+        Analog --Analog Pins--&gt; RIO
+        Fancy --I2C or SPI--&gt; RIO
+        Radio &lt;--Ethernet--&gt; RIO
+    end
+    Computer &lt;--WiFi--&gt; Radio
+    Computer -.USB.-&gt; RIO
+    classDef input fill: orange
+    class Radio,Digital,Analog,Fancy,Camera input
+    classDef output fill: lightgreen
+    class Pneumatics,Motors output
+</pre>
+<p>On the software side, an oversimplified diagram might look like this:</p>
+<pre class="mermaid">flowchart TD
+    Timer[&quot;
+        External Timer
+        Triggers on a set period
+        (every 50ms by default)
+    &quot;]
+    subgraph Framework[WPILib Framework]
+        Entry[WPILib Logic]
+        subgraph Ours[Our Code]
+            Auto[Autonomous Logic]
+            Teleop[Teleoperated Logic]
+        end
+        Entry -.When in auto mode.-&gt; Auto
+        Entry -.When in teleop mode.-&gt; Teleop
+        subgraph Helpers[Other WPILib Classes]
+            direction LR
+            Motors
+            Pneumatics
+            Schedulers
+            Sensors
+            Motors ~~~ Pneumatics
+            Pneumatics ~~~ Sensors
+            Sensors ~~~ Schedulers
+        end
+        Auto --&gt; Helpers
+        Teleop --&gt; Helpers
+    end
+    Timer --&gt; Framework
+    Framework --&gt; Wait[Done, waiting for Timer]
+</pre>
 <h2 id="terms-and-definitions"><a class="header" href="#terms-and-definitions">Terms and definitions</a></h2>
 <p><strong>FRC</strong>: First Robotics Competition - the entire competition and community, including
 building the robots, programming, wiring, social media, business, driving, etc.
