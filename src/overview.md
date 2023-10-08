@@ -1,6 +1,89 @@
 # Overview
 
-TODO: system diagram here? introduction to framework
+Here's a breakdown of the hardware commonly involved in FRC competitions:
+
+```mermaid
+flowchart TD
+    Computer[Computer]
+    subgraph Robot
+        RIO(("RoboRIO Microcontroller"))
+        Radio([Radio])
+        subgraph CAN[CAN Devices]
+            direction LR
+            Pneumatics[/Pneumatics Controller/]
+            Motors[/Motors/]
+            Pneumatics --- Motors
+        end
+        subgraph Sensors
+            Digital(["
+                Encoders
+                Limit Switches
+                Other Digital Sensors
+            "])
+            Analog(["
+                Potentiometers
+                Other Analog Sensors
+            "])
+            Fancy(["
+                Color Sensors
+                Gyroscopes
+                Other Complex Sensors
+            "])
+        end
+        subgraph Vision
+            Pi[Raspberry Pi]
+            Camera([Camera])
+        end
+
+        RIO <--CAN loop--> CAN
+        RIO <--Network Tables--> Vision
+        Pi <--USB--> Camera
+        Digital --Digital Pins--> RIO
+        Analog --Analog Pins--> RIO
+        Fancy --I2C or SPI--> RIO
+        Radio <--Ethernet--> RIO
+    end
+    Computer <--WiFi--> Radio
+    Computer -.USB.-> RIO
+    classDef input fill: orange
+    class Radio,Digital,Analog,Fancy,Camera input
+    classDef output fill: lightgreen
+    class Pneumatics,Motors output
+```
+
+On the software side, an oversimplified diagram might look like this:
+
+```mermaid
+flowchart TD
+    Timer["
+        External Timer
+        Triggers on a set period
+        (every 50ms by default)
+    "]
+    subgraph Framework[WPILib Framework]
+        Entry[WPILib Logic]
+        subgraph Ours[Our Code]
+            Auto[Autonomous Logic]
+            Teleop[Teleoperated Logic]
+        end
+        Entry -.When in auto mode.-> Auto
+        Entry -.When in teleop mode.-> Teleop
+        subgraph Helpers[Other WPILib Classes]
+            direction LR
+            Motors
+            Pneumatics
+            Schedulers
+            Sensors
+            Motors ~~~ Pneumatics
+            Pneumatics ~~~ Sensors
+            Sensors ~~~ Schedulers
+        end
+        Auto --> Helpers
+        Teleop --> Helpers
+    end
+    Timer --> Framework
+    Framework --> Wait[Done, waiting for Timer]
+```
 
 ## Terms and definitions
 

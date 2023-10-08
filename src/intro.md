@@ -30,6 +30,7 @@ However, this guide has a few explicit goals that other resources tend not to fu
 - *Be structured.* Some resources have great information, but don't structure it in a way such that a beginner can easily learn.
 - *Be language-independent.* Some resources focus specifically on Java or C++, rather than on the concepts that are shared across all WPILib languages.
 - *Give lots of diagrams and code examples.* Some resources give only large blocks of text or long videos, without any alternative forms of presenting the information.
+- *Explain why.* Some resources give great explanations on current conventions and best-practices, but don't explain their purpose or what problems they avoid.
 
 [wpilib-docs]: https://docs.wpilib.org/en/stable/index.html
 [emory-guide]: https://github.com/Emory-Robotics/FRC-Programming-Guide
