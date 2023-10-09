@@ -115,6 +115,12 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/JoeWildfong/frc-programming" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/JoeWildfong/frc-programming/edit/main/src/overview.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -142,6 +148,13 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="overview"><a class="header" href="#overview">Overview</a></h1>
+<p>To give a high-level overview of how an FRC robot works, we'll present diagrams representing the
+hardware and software components commonly found on a typical FRC robot.</p>
+<p>Don't worry if you aren't familiar with all the terminology used here -
+these diagrams are only to give a high-level overview of the components and how they interact.</p>
+<p>Also keep in mind that some aspects are deliberately oversimplified.
+The goal is not to be perfectly accurate, but to be close enough for a broad understanding.
+We will refine and expand upon parts of these diagrams in later sections.</p>
 <p>Here's a breakdown of the hardware commonly involved in FRC competitions:</p>
 <pre class="mermaid">flowchart TD
     Computer[Computer]
@@ -190,7 +203,13 @@
     classDef output fill: lightgreen
     class Pneumatics,Motors output
 </pre>
-<p>On the software side, an oversimplified diagram might look like this:</p>
+<p>Key takeaways:</p>
+<ul>
+<li>At the center of everything is the RoboRIO. This is where most of the code you write will be executed.</li>
+<li>There is a secondary processor, typically a Raspberry Pi, used for vision processing.
+This is covered in more detail in the <a href="vision/intro.html">Vision</a> section of this guide.</li>
+</ul>
+<p>As for the software:</p>
 <pre class="mermaid">flowchart TD
     Timer[&quot;
         External Timer
@@ -221,6 +240,14 @@
     Timer --&gt; Framework
     Framework --&gt; Wait[Done, waiting for Timer]
 </pre>
+<p>Key takeaways:</p>
+<ul>
+<li>All of the code you will write is within a framework called [WPILib].</li>
+<li>WPILib handles as much as possible, from scheduling to interacting with hardware, leaving us to write the robot-specific logic.</li>
+<li>All of our code is called on a schedule, by default every 50 milliseconds, although this is configurable.
+Following WPILib's terminology, this guide will refer to one iteration of this loop as a <strong>Periodic Interval</strong>.
+Since our code is called every Periodic Interval, it must finish running before the end of each Periodic Interval.</li>
+</ul>
 <h2 id="terms-and-definitions"><a class="header" href="#terms-and-definitions">Terms and definitions</a></h2>
 <p><strong>FRC</strong>: First Robotics Competition - the entire competition and community, including
 building the robots, programming, wiring, social media, business, driving, etc.
@@ -234,7 +261,7 @@ and solenoids, setting up a main loop to run every 20ms, and providing a framewo
 you to have the robot perform multiple actions at the same time, without allowing you to
 accidentally have the same hardware trying to do both. WPILib offers other paradigms, but
 Command-Based is the most popular and generally the easiest to use. This guide focuses on
-Command-Based Programming - see <a href="/command-based/intro.html">Chapter 2</a>.</p>
+Command-Based Programming - see <a href="command-based/intro.html">Chapter 2</a>.</p>
 <p><strong>Subsystems</strong> and <strong>Commands</strong>: Important concepts in Command-Based Programming.
 Subsystems are groups made up of one or more pieces of physical hardware on the robot with
 a common purpose (e.g. a grabber, a drivetrain, etc.) and commands are actions that these
