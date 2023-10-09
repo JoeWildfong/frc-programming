@@ -107,7 +107,7 @@ Key takeaways:
 
 - All of the code you will write is within a framework called **WPILib**.
 - WPILib handles as much as possible, from scheduling to interacting with hardware, leaving us to write the robot-specific logic.
-- All of our code is called on a schedule, by default every 50 milliseconds, although this is configurable.
+- All of our code is called on a schedule, by default every 50 milliseconds (20 times per second), although this is configurable.
   Following WPILib's terminology, this guide will refer to one iteration of this loop as a **Periodic Cycle**.
   Since our code is called at the start of every Periodic Cycle, it must finish running before the start of the next cycle.
 
