@@ -105,11 +105,11 @@ flowchart TD
 
 Key takeaways:
 
-- All of the code you will write is within a framework called [WPILib].
+- All of the code you will write is within a framework called **WPILib**.
 - WPILib handles as much as possible, from scheduling to interacting with hardware, leaving us to write the robot-specific logic.
 - All of our code is called on a schedule, by default every 50 milliseconds, although this is configurable.
-  Following WPILib's terminology, this guide will refer to one iteration of this loop as a **Periodic Interval**.
-  Since our code is called every Periodic Interval, it must finish running before the end of each Periodic Interval.
+  Following WPILib's terminology, this guide will refer to one iteration of this loop as a **Periodic Cycle**.
+  Since our code is called at the start of every Periodic Cycle, it must finish running before the start of the next cycle.
 
 ## Terms and definitions
 
@@ -133,6 +133,11 @@ Command-Based Programming - see [Chapter 2][command-based-chapter].
 Subsystems are groups made up of one or more pieces of physical hardware on the robot with
 a common purpose (e.g. a grabber, a drivetrain, etc.) and commands are actions that these
 subsystems can take (e.g. pick up an object, follow a preprogrammed path, etc.).
+
+**Periodic Cycle**: One iteration of the main loop of robot code.
+Not an official term, but WPILib commonly uses the term "Periodic" for functions called in each cycle,
+so this guide will try to use the same terminology. Be aware, however, that the term "cycle" is also
+used for the time it takes for your robot to score game points.
 
 [framework]: https://en.wikipedia.org/wiki/Software_framework
 [paradigm]: https://en.wikipedia.org/wiki/Programming_paradigm
