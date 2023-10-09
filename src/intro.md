@@ -5,7 +5,7 @@ It also aims to be useful as a reference if you need to brush up on something yo
 
 Start with a [coding-focused overview of FRC][overview], or use the sidebar to jump to a specific section.
 
-[overview]: /overview.md
+[overview]: overview.md
 
 ## Prerequisites
 

@@ -1,5 +1,15 @@
 # Overview
 
+To give a high-level overview of how an FRC robot works, we'll present diagrams representing the
+hardware and software components commonly found on a typical FRC robot.
+
+Don't worry if you aren't familiar with all the terminology used here -
+these diagrams are only to give a high-level overview of the components and how they interact.
+
+Also keep in mind that some aspects are deliberately oversimplified.
+The goal is not to be perfectly accurate, but to be close enough for a broad understanding.
+We will refine and expand upon parts of these diagrams in later sections.
+
 Here's a breakdown of the hardware commonly involved in FRC competitions:
 
 ```mermaid
@@ -51,7 +61,15 @@ flowchart TD
     class Pneumatics,Motors output
 ```
 
-On the software side, an oversimplified diagram might look like this:
+Key takeaways:
+
+- At the center of everything is the RoboRIO. This is where most of the code you write will be executed.
+- There is a secondary processor, typically a Raspberry Pi, used for vision processing.
+  This is covered in more detail in the [Vision] section of this guide.
+
+[Vision]: vision/intro.md
+
+As for the software:
 
 ```mermaid
 flowchart TD
@@ -85,6 +103,14 @@ flowchart TD
     Framework --> Wait[Done, waiting for Timer]
 ```
 
+Key takeaways:
+
+- All of the code you will write is within a framework called [WPILib].
+- WPILib handles as much as possible, from scheduling to interacting with hardware, leaving us to write the robot-specific logic.
+- All of our code is called on a schedule, by default every 50 milliseconds, although this is configurable.
+  Following WPILib's terminology, this guide will refer to one iteration of this loop as a **Periodic Interval**.
+  Since our code is called every Periodic Interval, it must finish running before the end of each Periodic Interval.
+
 ## Terms and definitions
 
 **FRC**: First Robotics Competition - the entire competition and community, including
@@ -110,4 +136,4 @@ subsystems can take (e.g. pick up an object, follow a preprogrammed path, etc.).
 
 [framework]: https://en.wikipedia.org/wiki/Software_framework
 [paradigm]: https://en.wikipedia.org/wiki/Programming_paradigm
-[command-based-chapter]: /command-based/intro.md
+[command-based-chapter]: command-based/intro.md

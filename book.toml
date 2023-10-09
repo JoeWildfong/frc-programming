@@ -14,3 +14,6 @@ command = "mdbook-mermaid"
 
 [output.html]
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
+git-repository-url = "https://github.com/JoeWildfong/frc-programming"
+edit-url-template = "https://github.com/JoeWildfong/frc-programming/edit/main/{path}"
+site-url = "/frc-programming/"
