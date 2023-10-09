@@ -275,11 +275,11 @@ This is covered in more detail in the <a href="vision/intro.html">Vision</a> sec
 </pre>
 <p>Key takeaways:</p>
 <ul>
-<li>All of the code you will write is within a framework called [WPILib].</li>
+<li>All of the code you will write is within a framework called <strong>WPILib</strong>.</li>
 <li>WPILib handles as much as possible, from scheduling to interacting with hardware, leaving us to write the robot-specific logic.</li>
 <li>All of our code is called on a schedule, by default every 50 milliseconds, although this is configurable.
-Following WPILib's terminology, this guide will refer to one iteration of this loop as a <strong>Periodic Interval</strong>.
-Since our code is called every Periodic Interval, it must finish running before the end of each Periodic Interval.</li>
+Following WPILib's terminology, this guide will refer to one iteration of this loop as a <strong>Periodic Cycle</strong>.
+Since our code is called at the start of every Periodic Cycle, it must finish running before the start of the next cycle.</li>
 </ul>
 <h2 id="terms-and-definitions"><a class="header" href="#terms-and-definitions">Terms and definitions</a></h2>
 <p><strong>FRC</strong>: First Robotics Competition - the entire competition and community, including
@@ -299,6 +299,10 @@ Command-Based Programming - see <a href="command-based/intro.html">Chapter 2</a>
 Subsystems are groups made up of one or more pieces of physical hardware on the robot with
 a common purpose (e.g. a grabber, a drivetrain, etc.) and commands are actions that these
 subsystems can take (e.g. pick up an object, follow a preprogrammed path, etc.).</p>
+<p><strong>Periodic Cycle</strong>: One iteration of the main loop of robot code.
+Not an official term, but WPILib commonly uses the term &quot;Periodic&quot; for functions called in each cycle,
+so this guide will try to use the same terminology. Be aware, however, that the term &quot;cycle&quot; is also
+used for the time it takes for your robot to score game points.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="wpilib-basics"><a class="header" href="#wpilib-basics">WPILib Basics</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation-and-setup"><a class="header" href="#installation-and-setup">Installation and Setup</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="hardware-control"><a class="header" href="#hardware-control">Hardware Control</a></h1>
